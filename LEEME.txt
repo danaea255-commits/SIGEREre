@@ -1,0 +1,63 @@
+================================================
+  SIGERE - Sistema de Gestión de Restaurante
+  Versión Java Swing
+================================================
+
+REQUISITOS
+----------
+- JDK 8 o superior
+- MySQL 5.7 / 8.0 o MariaDB
+- MySQL Connector/J (archivo .jar en carpeta lib/)
+
+PASOS PARA EJECUTAR
+-------------------
+1. Crear la base de datos (MySQL Workbench o consola), en orden:
+   01_tablas.sql
+   02_datos_ejemplo.sql
+   04_editar_mesas.sql
+   05_estado_limpieza.sql
+
+2. Asegúrate de que lib/ contenga el mysql-connector-j-....jar
+
+3. Compilar y ejecutar (desde la carpeta del proyecto)
+
+   Windows:
+      javac -encoding UTF-8 -cp ".;lib/*" *.java
+      java -cp ".;lib/*" Principal
+
+   Linux / macOS:
+      javac -encoding UTF-8 -cp ".:lib/*" *.java
+      java -cp ".:lib/*" Principal
+
+4. Usuarios de prueba
+   Administrador → admin@sigere.com  /  admin123
+   Mesero        → carlos@sigere.com /  mesero123
+
+CONFIGURACIÓN
+-------------
+Edita Conexion.java si tu puerto o clave son distintos.
+Por defecto: localhost:3306 / saboros / sigere_user / 123456
+
+ROLES Y FLUJO
+-------------
+Mesero
+- Clic en mesa libre → Tomar comanda o Reservar
+- Clic en mesa reservada → Tomar comanda o Cancelar reserva
+- Clic en mesa en limpieza → Marcar como libre (terminada) o Nueva comanda
+- Marca pedidos listos como Entregado
+- No cobra (eso es Caja)
+
+Cocina
+- Cambia estados: Pendiente → En Preparación → Listo
+- El administrador solo puede consultar (sin botones de acción)
+
+Caja
+- Cobra pedidos pendientes
+- Al cobrar, la mesa pasa a estado limpieza
+
+Administrador
+- Supervisa mesas (puede cambiar estados y reservar)
+- No genera comandas
+- No marca platillos como listos en cocina
+- Consulta ventas del día y del mes en el panel y en Órdenes y Ventas
+- Gestiona menú, personal y plano de mesas
